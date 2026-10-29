@@ -1,5 +1,6 @@
-export const ISS_API_URL =
-  import.meta.env.VITE_ISS_API_URL ?? 'http://api.open-notify.org/iss-now.json';
+// 기본값은 Vite 프록시(/iss-api) 경유: 같은 출처 요청이라 CORS·http 차단 문제가 없다.
+// 프록시 없이 정적 배포할 때는 .env 에 VITE_ISS_API_URL=http://api.open-notify.org/iss-now.json 지정
+export const ISS_API_URL = import.meta.env.VITE_ISS_API_URL ?? '/iss-api/iss-now.json';
 
 const REQUEST_TIMEOUT_MS = 10_000;
 

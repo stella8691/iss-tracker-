@@ -32,11 +32,12 @@ src/
   - TLE 기반 정밀 계산이 아니므로 수 시간 역추정 시 수백 km 정도 오차가 날 수 있습니다.
 - **데이터 보존**: 저장 시, 앱 시작 시, 1분마다 4시간이 지난 좌표를 삭제합니다.
 
-## API 연결 문제
+## API 연결 방식
 
-`api.open-notify.org`는 http만 지원합니다. 앱을 https로 배포하면 브라우저가 요청을 차단하므로,
-CORS나 Mixed Content 문제가 생기면 `.env`에 아래를 넣어 Vite 프록시를 사용하세요.
+`api.open-notify.org`는 http만 지원합니다. 브라우저의 CORS·Mixed Content 차단을 피하려고
+앱은 기본으로 Vite 개발/미리보기 서버의 프록시(`/iss-api/iss-now.json`)를 거쳐 요청합니다.
+프록시 없이 정적 파일로 배포할 때는 `.env`에 아래처럼 직접 주소를 지정하세요.
 
 ```
-VITE_ISS_API_URL=/iss-api/iss-now.json
+VITE_ISS_API_URL=http://api.open-notify.org/iss-now.json
 ```
