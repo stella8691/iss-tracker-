@@ -35,8 +35,11 @@ src/
 ## API 연결 방식
 
 `api.open-notify.org`는 http만 지원합니다. 브라우저의 CORS·Mixed Content 차단을 피하려고
-앱은 기본으로 Vite 개발/미리보기 서버의 프록시(`/iss-api/iss-now.json`)를 거쳐 요청합니다.
-프록시 없이 정적 파일로 배포할 때는 `.env`에 아래처럼 직접 주소를 지정하세요.
+앱은 기본으로 같은 출처의 프록시(`/iss-api/iss-now.json`)를 거쳐 요청합니다.
+- 로컬: Vite 개발/미리보기 서버 프록시 (`vite.config.js`)
+- Vercel: `vercel.json`의 rewrites
+
+그 밖의 정적 호스팅처럼 프록시가 없는 곳에 배포할 때는 `.env`에 아래처럼 직접 주소를 지정하세요.
 
 ```
 VITE_ISS_API_URL=http://api.open-notify.org/iss-now.json
