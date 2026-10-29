@@ -3,7 +3,9 @@ import IssMap from './components/IssMap';
 import StatsPanel from './components/StatsPanel';
 import { useIssTracker } from './hooks/useIssTracker';
 
-const formatCoord = (value, pos, neg) =>
+const ALERT_AFTER_ERRORS = 2;
+
+const formatCoord =(value, pos, neg) =>
   value == null ? '–' : `${Math.abs(value).toFixed(2)}° ${value >= 0 ? pos : neg}`;
 
 export default function App() {
@@ -25,7 +27,7 @@ export default function App() {
       <header className="hero">
         <span className="badge">
           <span className={`live-dot${error ? ' live-dot--off' : ''}`} aria-hidden="true" />
-          {error ? '연결 재시도 중' : '실시간'} · open-notify API · 최근 4시간 궤적
+          {error ? '재시도 중' : '실시간'} · open-notify API · 최근 4시간 궤적
         </span>
         <h1>국제우주정거장은 지금 어디에?</h1>
         <p className="coords" aria-live="polite">
@@ -56,9 +58,11 @@ export default function App() {
               </label>
             </div>
 
-            {error && (
+            {/* open-notify API 는 가끔 404·429·시간 초과로 실패하므로 연속 실패일 때만 경고 */}
+            {error && polling.errors >= ALERT_AFTER_ERRORS && (
               <p className="alert" role="alert">
-                위치를 받아오지 못했습니다. {error.message} 다음 요청은 자동으로 다시 시도합니다.
+                위치를 {polling.errors}회 연속 받아오지 못했습니다. {error.message} 다음 요청은 자동으로 다시
+                시도합니다.
               </p>
             )}
 

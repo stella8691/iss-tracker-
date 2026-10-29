@@ -15,7 +15,11 @@ export async function fetchIssNow(signal) {
 
   try {
     const res = await fetch(ISS_API_URL, { signal: combined, cache: 'no-store' });
-    if (!res.ok) throw new Error(`API가 ${res.status} 상태로 응답했습니다.`);
+    if (!res.ok) {
+      const reason =
+        res.status === 429 ? ' (요청이 너무 잦다는 응답)' : res.status >= 500 || res.status === 404 ? ' (API 서버 일시 장애)' : '';
+      throw new Error(`API가 ${res.status} 상태로 응답했습니다${reason}.`);
+    }
     const json = await res.json();
     const responseTime = performance.now() - started;
 
