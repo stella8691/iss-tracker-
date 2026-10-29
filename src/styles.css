@@ -56,7 +56,7 @@ a { color: var(--accent); }
 
 /* 히어로 */
 header.hero {
-  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  background: #7c3aed;
   color: #fff;
   padding: 56px 24px 48px;
   text-align: center;
